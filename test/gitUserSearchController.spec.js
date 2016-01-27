@@ -1,10 +1,18 @@
 describe('GitUserSearchController', function() {
-  beforeEach(module('GitUserSearch'));
-
+  var searchFactoryMock;
   var ctrl;
 
-  beforeEach(inject(function($controller) {
+  beforeEach(function() {
+    searchFactoryMock = jasmine.createSpyObj('Search', ['query']);
+    module('GitUserSearch', {
+      Search: searchFactoryMock
+    });
+  });
+
+  beforeEach(inject(function($controller, $q, $rootScope) {
     ctrl = $controller('GitUserSearchController');
+    searchFactoryMock.query.and.returnValue($q.when({ data: {items: 'cat'} }));
+    scope = $rootScope;
   }));
 
   it('initialises with an empty search result and term', function() {
@@ -13,39 +21,11 @@ describe('GitUserSearchController', function() {
   });
 
   describe('when searching for a user', function() {
-    var httpBackend;
-    beforeEach(inject(function($httpBackend) {
-      httpBackend = $httpBackend;
-      httpBackend
-        .expectGET("https://api.github.com/search/users?q=hello")
-        .respond(
-          { items: items }
-        );
-    }));
-
-    afterEach(function() {
-      httpBackend.verifyNoOutstandingExpectation();
-      httpBackend.verifyNoOutstandingRequest();
-     });
-
-    var items = [
-      {
-        "login": "tansaku",
-        "avatar_url": "https://avatars.githubusercontent.com/u/30216?v=3",
-        "html_url": "https://github.com/tansaku"
-      },
-      {
-        "login": "stephenlloyd",
-        "avatar_url": "https://avatars.githubusercontent.com/u/196474?v=3",
-        "html_url": "https://github.com/stephenlloyd"
-      }
-    ];
-
     it('displays search results', function() {
       ctrl.searchTerm = 'hello';
       ctrl.doSearch();
-      httpBackend.flush();
-      expect(ctrl.searchResult.items).toEqual(items);
+      scope.$apply();
+      expect(ctrl.searchResult.items).toEqual('cat');
     });
   });
 });
