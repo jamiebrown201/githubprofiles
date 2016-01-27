@@ -2,8 +2,12 @@
 <html lang="en" ng-app="GitUserSearch">
   <head>
     <meta charset="utf-8">
+
     <title>Github user search</title>
+
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="css/main.css">
+
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-mocks/angular-mocks.js"></script>
@@ -12,20 +16,36 @@
     <script src="js/gitUserSearchController.js"></script>
     <script src="js/searchFactory.js"></script>
   </head>
-  <h1>Github user search</h1>
   <body ng-controller="GitUserSearchController as searchCtrl">
-    <div>
-      <form class="form-horizontal" name="searchForm">
-        <input type="text" ng-model="searchCtrl.searchTerm" ng-change="searchForm.$valid &amp;&amp; searchCtrl.doSearch()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }" required>
-        <button class="btn" ng-click="searchCtrl.doSearch()">Search</button>
-      </form>
-      <p>Your last search: {{searchCtrl.searchTerm}}</p>
-      <ul class="list-group">
-        <li ng-repeat="user in searchCtrl.searchResult.items">
-          <img ng-src="{{user.avatar_url}}&amp;s=50" width="42" height="42">
-          <a ng-href="{{user.html_url}}">{{user.login}}</a>
-        </li>
-      </ul>
+    <header>
+      <h1 class="text-center">Github user search</h1>
+    </header>
+    <div class="container">
+      <div class="row">
+        <form class="form-inline col-md-6 col-md-offset-3" name="searchForm" class="searchForm">
+          <div class="input-group col-md-12 input-group-lg">
+            <input class = "form-control text-center"
+                   placeholder="Github Username"
+                   type="text"
+                   ng-model="searchCtrl.searchTerm"
+                   ng-change="searchForm.$valid &amp;&amp; searchCtrl.doSearch()"
+                   ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"
+                   required>
+            <span class="input-group-btn">
+              <button class="btn btn-success" ng-click="searchCtrl.doSearch()"><i class="glyphicon glyphicon-search"></i></button>
+            </span>
+         </div>
+        </form>
+      </div>
+      <div class="row">
+        <p>Your last search: {{searchCtrl.searchTerm}}</p>
+        <ul class="list-group">
+          <li ng-repeat="user in searchCtrl.searchResult.items">
+            <img ng-src="{{user.avatar_url}}&amp;s=50" width="42" height="42">
+            <a ng-href="{{user.html_url}}">{{user.login}}</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </body>
 </html>
