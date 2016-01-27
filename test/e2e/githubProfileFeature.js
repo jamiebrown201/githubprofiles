@@ -1,4 +1,4 @@
-describe('Github Profile finder', function(){
+describe('Github Profile finder', function() {
   var searchBox = element(by.model('searchCtrl.searchTerm'));
   var searchButton = element(by.className('btn'));
 
@@ -10,12 +10,11 @@ describe('Github Profile finder', function(){
     expect(browser.getTitle()).toEqual('Github user search');
   });
 
-  it('has a title', function() {
-
+  it('finds profiles', function() {
     searchBox.sendKeys('jamiebrown201');
     searchButton.click();
 
-    expect(element(by.binding('user.login')).getText())
-      .toEqual('jamiebrown201');
+    var profiles = element.all(by.repeater('user in searchCtrl.searchResult.items'));
+    expect(profiles.get(0).getText()).toEqual('jamiebrown201');
   });
 });

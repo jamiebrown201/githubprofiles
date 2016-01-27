@@ -24,7 +24,7 @@ describe('factory: Search', function() {
         .respond(
           { items: items }
         );
-    }));
+  }));
 
   it('responds to query', function() {
     expect(search.query).toBeDefined();
