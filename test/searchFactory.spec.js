@@ -14,9 +14,11 @@ describe('factory: Search', function() {
   ];
 
   beforeEach(module('GitUserSearch'));
+  
   beforeEach(inject(function(Search) {
     search = Search;
   }));
+
   beforeEach(inject(function($httpBackend) {
       httpBackend = $httpBackend;
       httpBackend
@@ -25,6 +27,11 @@ describe('factory: Search', function() {
           { items: items }
         );
   }));
+
+  afterEach(function() {
+    httpBackend.verifyNoOutstandingExpectation();
+    httpBackend.verifyNoOutstandingRequest();
+  });
 
   it('responds to query', function() {
     expect(search.query).toBeDefined();
