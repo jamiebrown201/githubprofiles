@@ -5,5 +5,11 @@ exports.config = {
     browserName: 'firefox'
   }, {
     browserName: 'chrome'
-  }]
+  }],
+  onPrepare: function(){
+    require('protractor-http-mock').config = {
+      rootDirectory: __dirname,
+      protractorConfig: 'conf.js'
+    };
+  }
 };
