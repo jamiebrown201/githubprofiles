@@ -38,11 +38,11 @@
         </form>
       </div>
       <div class="row">
-        <p>Your last search: {{searchCtrl.searchTerm}}</p>
+        <h2 class="text-center">Results For: {{searchCtrl.searchTerm}}</h2>
         <ul class="list-group">
-          <li ng-repeat="user in searchCtrl.searchResult.items">
-            <img ng-src="{{user.avatar_url}}&amp;s=50" width="42" height="42">
-            <a ng-href="{{user.html_url}}">{{user.login}}</a>
+          <li class="user list-group-item" ng-repeat="user in searchCtrl.searchResult.items">
+            <a class="user-login text-center" ng-href="{{user.html_url}}">{{user.login}}</a>
+            <img class="user-avatar" ng-src="{{user.avatar_url}}&amp;s=75" >
           </li>
         </ul>
       </div>
